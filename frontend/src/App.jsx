@@ -1,22 +1,23 @@
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import ChartDisplay from './components/ChartDisplay';
-import ExpenseForm from './components/ExpenseForm';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ChartDisplay from "./components/ChartDisplay";
+import ExpenseForm from "./components/ExpenseForm";
 
 function App() {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/expenses')
-      .then(res => setExpenses(res.data))
-      .catch(err => console.error(err));
+    axios
+      .get("http://localhost:1234/api/expenses")
+      .then((res) => setExpenses(res.data))
+      .catch((err) => console.error(err));
   }, []);
 
   const handleAddExpense = (newExpense) => {
-    axios.post('http://localhost:5000/api/expenses', newExpense)
-      .then(res => setExpenses(prev => [...prev, res.data]))
-      .catch(err => console.error(err));
+    axios
+      .post("http://localhost:1234/api/expenses", newExpense)
+      .then((res) => setExpenses((prev) => [...prev, res.data]))
+      .catch((err) => console.error(err));
   };
 
   return (
