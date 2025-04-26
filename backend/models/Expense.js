@@ -1,0 +1,18 @@
+import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
+
+export const ExpenseSchema = new Schema({
+  category: {
+    type: String,
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
