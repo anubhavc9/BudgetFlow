@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import expenseRoutes from "./routes/expenses.js";
+import goalRoutes from "./routes/goals.js";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ mongoose
   .catch((err) => console.error(err));
 
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/goals", goalRoutes);
 
 const PORT = process.env.PORT || 1234;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
