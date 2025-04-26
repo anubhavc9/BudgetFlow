@@ -3,6 +3,15 @@ import axios from "axios";
 import ChartDisplay from "./components/ChartDisplay";
 import ExpenseForm from "./components/ExpenseForm";
 import BudgetTracker from "./components/BudgetTracker";
+import RecentExpenses from "./components/RecentExpenses"; // Import the new component
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+} from "@/components/ui/table";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 function App() {
   const [expenses, setExpenses] = useState([]);
@@ -22,50 +31,37 @@ function App() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">BudgetFlow Dashboard</h1>
+    <div className="p-6 space-y-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">
+        BudgetFlow Dashboard
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="col-span-1 lg:col-span-2">
-          <ChartDisplay data={expenses} />
-        </div>
-        <div>
-          <BudgetTracker />
-        </div>
+        <Card className="col-span-1 lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Spending Breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartDisplay data={expenses} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Budget Goals</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <BudgetTracker />
+          </CardContent>
+        </Card>
       </div>
-      <div className="mt-6">
-        <ExpenseForm onAdd={handleAddExpense} />
-      </div>
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Recent Expenses</h2>
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">Date</th>
-              <th className="border border-gray-300 px-4 py-2">Category</th>
-              <th className="border border-gray-300 px-4 py-2">Description</th>
-              <th className="border border-gray-300 px-4 py-2">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((expense, index) => (
-              <tr key={index}>
-                <td className="border border-gray-300 px-4 py-2">
-                  {expense.date}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {expense.category}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {expense.description}
-                </td>
-                <td className="border border-gray-300 px-4 py-2">
-                  ${expense.amount.toFixed(2)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Add New Expense</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ExpenseForm onAdd={handleAddExpense} />
+        </CardContent>
+      </Card>
+      <RecentExpenses expenses={expenses} /> {/* Use the new component */}
     </div>
   );
 }

@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ExpenseForm = ({ onAdd }) => {
   const [category, setCategory] = useState("");
@@ -16,60 +26,40 @@ const ExpenseForm = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded shadow">
-      <h2 className="text-lg font-semibold mb-4">Add New Expense</h2>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Amount</label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="0.00"
-          required
-          className="w-full border rounded px-3 py-2"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Category</label>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-          className="w-full border rounded px-3 py-2"
-        >
-          <option value="">Select a category</option>
-          <option value="Food">Food</option>
-          <option value="Shopping">Shopping</option>
-          <option value="Utilities">Utilities</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="e.g., Coffee, Groceries"
-          className="w-full border rounded px-3 py-2"
-        ></textarea>
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Date</label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-          className="w-full border rounded px-3 py-2"
-        />
-      </div>
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-4 py-2 rounded w-full"
-      >
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <Input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Amount"
+        required
+      />
+      <Select onValueChange={(value) => setCategory(value)} required>
+        <SelectTrigger>
+          <SelectValue placeholder="Select a category" />
+        </SelectTrigger>
+        <SelectContent className="bg-white shadow-md rounded">
+          <SelectItem value="Food">Food</SelectItem>
+          <SelectItem value="Shopping">Shopping</SelectItem>
+          <SelectItem value="Utilities">Utilities</SelectItem>
+          <SelectItem value="Entertainment">Entertainment</SelectItem>
+          <SelectItem value="Other">Other</SelectItem>
+        </SelectContent>
+      </Select>
+      <Textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Description"
+      />
+      <Input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        required
+      />
+      <Button type="submit" className="w-full bg-indigo-600 text-white">
         Add Expense
-      </button>
+      </Button>
     </form>
   );
 };

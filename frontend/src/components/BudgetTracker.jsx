@@ -1,4 +1,5 @@
 import React from "react";
+import { Progress } from "@/components/ui/progress";
 
 const BudgetTracker = () => {
   const goals = [
@@ -9,22 +10,16 @@ const BudgetTracker = () => {
   ];
 
   return (
-    <div className="p-4 border rounded shadow">
-      <h2 className="text-lg font-semibold mb-4">Budget Goals</h2>
+    <div className="space-y-4">
       {goals.map((goal, index) => (
-        <div key={index} className="mb-2">
-          <div className="flex justify-between text-sm">
+        <div key={index}>
+          <div className="flex justify-between text-sm font-medium text-gray-700">
             <span>{goal.category}</span>
             <span>
               ${goal.spent.toFixed(2)} / ${goal.limit.toFixed(2)}
             </span>
           </div>
-          <div className="w-full bg-gray-200 h-2 rounded">
-            <div
-              className="bg-green-500 h-2 rounded"
-              style={{ width: `${(goal.spent / goal.limit) * 100}%` }}
-            ></div>
-          </div>
+          <Progress value={(goal.spent / goal.limit) * 100} className="mt-2" />
         </div>
       ))}
     </div>
