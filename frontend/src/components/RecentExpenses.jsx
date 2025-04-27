@@ -37,7 +37,7 @@ function RecentExpenses({ expenses }) {
                   {expense.description || "-"}
                 </TableCell>
                 <TableCell className="text-right">
-                  ${expense.amount.toFixed(2)}
+                  ₹{expense.amount.toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}

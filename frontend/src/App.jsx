@@ -37,7 +37,7 @@ function App() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="col-span-1 lg:col-span-2">
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle>Spending Breakdown</CardTitle>
           </CardHeader>
           <CardContent>

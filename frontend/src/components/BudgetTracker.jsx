@@ -16,7 +16,7 @@ const BudgetTracker = () => {
           <div className="flex justify-between text-sm font-medium text-gray-700">
             <span>{goal.category}</span>
             <span>
-              ${goal.spent.toFixed(2)} / ${goal.limit.toFixed(2)}
+              ₹{goal.spent.toFixed(2)} / ₹{goal.limit.toFixed(2)}
             </span>
           </div>
           <Progress value={(goal.spent / goal.limit) * 100} className="mt-2" />

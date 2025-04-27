@@ -28,7 +28,7 @@ const ChartDisplay = ({ data }) => {
         <Legend />
       </PieChart>
       <p className="text-lg font-bold text-gray-800 mt-4">
-        Total: ${total.toFixed(2)}
+        Total: ₹{total.toFixed(2)}
       </p>
     </div>
   );
