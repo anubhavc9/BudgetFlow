@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import axios from "axios";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import Utility from "@/utils/Utility";
 
 const BudgetTracker = () => {
   const [goals, setGoals] = useState([]);
@@ -28,7 +29,8 @@ const BudgetTracker = () => {
                   <div className="flex justify-between text-sm font-medium text-gray-700">
                     <span>{goal.category}</span>
                     <span>
-                      ₹{goal.spent} / ₹{goal.limit}
+                      {Utility.formatCurrency(goal.spent)} /{" "}
+                      {Utility.formatCurrency(goal.limit)}
                     </span>
                   </div>
                   <Progress

@@ -1,3 +1,4 @@
+import Utility from "@/utils/Utility";
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
@@ -35,7 +36,9 @@ const ChartDisplay = ({ data }) => {
         <Tooltip />
         <Legend />
       </PieChart>
-      <p className="text-lg font-bold text-gray-800 mt-4">Total: ₹{total}</p>
+      <p className="text-lg font-bold text-gray-800 mt-4">
+        Total: {Utility.formatCurrency(total)}
+      </p>
     </div>
   );
 };

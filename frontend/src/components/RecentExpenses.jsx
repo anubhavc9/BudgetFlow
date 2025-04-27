@@ -7,6 +7,7 @@ import {
   TableBody,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import Utility from "@/utils/Utility";
 
 function RecentExpenses({ expenses }) {
   return (
@@ -34,7 +35,9 @@ function RecentExpenses({ expenses }) {
                 <TableCell className="text-left">
                   {expense.description || "-"}
                 </TableCell>
-                <TableCell className="text-right">₹{expense.amount}</TableCell>
+                <TableCell className="text-right">
+                  {Utility.formatCurrency(expense.amount)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
