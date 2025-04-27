@@ -1,7 +1,15 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
-const COLORS = ["#4F46E5", "#10B981", "#F59E0B", "#EF4444"];
+const COLORS = [
+  "#4F46E5",
+  "#10B981",
+  "#F59E0B",
+  "#EF4444",
+  "#3B82F6",
+  "#9333EA",
+  "#FBBF24",
+];
 
 const ChartDisplay = ({ data }) => {
   const total = data.reduce((sum, item) => sum + item.amount, 0);

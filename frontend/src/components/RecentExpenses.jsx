@@ -9,8 +9,6 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 function RecentExpenses({ expenses }) {
-  console.log("expenses:", expenses);
-
   return (
     <Card>
       <CardHeader>

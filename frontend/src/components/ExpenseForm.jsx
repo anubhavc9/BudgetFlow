@@ -9,6 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
+import { Calendar } from "./ui/calendar";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
 
 const ExpenseForm = ({ onAdd }) => {
   const [category, setCategory] = useState("");
@@ -53,13 +58,30 @@ const ExpenseForm = ({ onAdd }) => {
         placeholder="Description"
         className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
       />
-      <Input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        required
-        className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
-      />
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-[240px] justify-start text-left font-normal w-full",
+              !date && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0 bg-white" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            initialFocus
+            className="[&_[aria-selected=true]]:bg-indigo-600 [&_[aria-selected=true]]:text-white [&_[aria-selected=true]]:hover:bg-indigo-700 [&_button:hover]:bg-indigo-100"
+          />
+        </PopoverContent>
+      </Popover>
+
       <Button
         type="submit"
         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
