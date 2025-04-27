@@ -27,9 +27,7 @@ const ChartDisplay = ({ data }) => {
         <Tooltip />
         <Legend />
       </PieChart>
-      <p className="text-lg font-bold text-gray-800 mt-4">
-        Total: ₹{total.toFixed(2)}
-      </p>
+      <p className="text-lg font-bold text-gray-800 mt-4">Total: ₹{total}</p>
     </div>
   );
 };
