@@ -27,13 +27,13 @@ const ChartDisplay = ({ data }) => {
           fill="#8884d8"
           dataKey="amount"
           nameKey="category"
-          label
+          label={({ name, value }) => `${Utility.formatCurrency(value)}`}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip formatter={(value) => Utility.formatCurrency(value)} />
         <Legend />
       </PieChart>
       <p className="text-lg font-bold text-gray-800 mt-4">
