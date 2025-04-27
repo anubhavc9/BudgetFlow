@@ -37,14 +37,7 @@ function App() {
             <ChartDisplay data={expenses} />
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Budget Goals</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <BudgetTracker />
-          </CardContent>
-        </Card>
+        <BudgetTracker />
       </div>
       <Card>
         <CardHeader>
