@@ -8,13 +8,13 @@ export const GoalSchema = new Schema(
       type: String,
       required: true,
     },
-    targetAmount: {
+    limit: {
       type: Number,
       required: true,
     },
-    month: {
-      type: String,
-      required: true,
+    spent: {
+      type: Number,
+      default: 0,
     },
   },
   {

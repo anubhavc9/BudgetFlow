@@ -19,7 +19,10 @@ const BudgetTracker = () => {
               ₹{goal.spent.toFixed(2)} / ₹{goal.limit.toFixed(2)}
             </span>
           </div>
-          <Progress value={(goal.spent / goal.limit) * 100} className="mt-2" />
+          <Progress
+            value={(goal.spent / goal.limit) * 100}
+            className="mt-2 [&>*]:bg-indigo-600 bg-gray-300 rounded-full"
+          />
         </div>
       ))}
     </div>

@@ -5,8 +5,8 @@ const Goal = mongoose.model("Goal", GoalSchema);
 
 export const createGoal = async (req, res) => {
   try {
-    const { category, targetAmount, month } = req.body;
-    const newGoal = new Goal({ category, targetAmount, month });
+    const { category, limit, spent } = req.body;
+    const newGoal = new Goal({ category, limit, spent });
     await newGoal.save();
     res.status(201).json(newGoal);
   } catch (error) {
@@ -16,9 +16,7 @@ export const createGoal = async (req, res) => {
 
 export const getGoals = async (req, res) => {
   try {
-    const { month } = req.query;
-    const query = month ? { month } : {};
-    const goals = await Goal.find(query);
+    const goals = await Goal.find();
     res.json(goals);
   } catch (error) {
     res.status(500).json({ message: error.message });

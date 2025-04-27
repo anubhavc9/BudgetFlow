@@ -3,14 +3,7 @@ import axios from "axios";
 import ChartDisplay from "./components/ChartDisplay";
 import ExpenseForm from "./components/ExpenseForm";
 import BudgetTracker from "./components/BudgetTracker";
-import RecentExpenses from "./components/RecentExpenses"; // Import the new component
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableBody,
-} from "@/components/ui/table";
+import RecentExpenses from "./components/RecentExpenses";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 function App() {

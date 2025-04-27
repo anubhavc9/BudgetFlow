@@ -33,9 +33,10 @@ const ExpenseForm = ({ onAdd }) => {
         onChange={(e) => setAmount(e.target.value)}
         placeholder="Amount"
         required
+        className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
       />
       <Select onValueChange={(value) => setCategory(value)} required>
-        <SelectTrigger>
+        <SelectTrigger className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md">
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent className="bg-white shadow-md rounded">
@@ -50,14 +51,19 @@ const ExpenseForm = ({ onAdd }) => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
+        className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
       />
       <Input
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
         required
+        className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
       />
-      <Button type="submit" className="w-full bg-indigo-600 text-white">
+      <Button
+        type="submit"
+        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
+      >
         Add Expense
       </Button>
     </form>
