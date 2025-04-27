@@ -11,6 +11,9 @@ export const ExpenseSchema = new Schema({
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,
