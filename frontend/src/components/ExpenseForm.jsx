@@ -14,6 +14,7 @@ import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { categories } from "@/lib/categories";
 
 const ExpenseForm = ({ onAdd }) => {
   const [category, setCategory] = useState("");
@@ -45,11 +46,11 @@ const ExpenseForm = ({ onAdd }) => {
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent className="bg-white shadow-md rounded">
-          <SelectItem value="Food">Food</SelectItem>
-          <SelectItem value="Shopping">Shopping</SelectItem>
-          <SelectItem value="Utilities">Utilities</SelectItem>
-          <SelectItem value="Entertainment">Entertainment</SelectItem>
-          <SelectItem value="Other">Other</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category.value} value={category.value}>
+              {category.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Textarea

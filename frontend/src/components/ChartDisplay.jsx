@@ -1,19 +1,15 @@
+import { categories } from "@/lib/categories";
 import Utility from "@/utils/Utility";
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
-const COLORS = [
-  "#4F46E5",
-  "#10B981",
-  "#F59E0B",
-  "#EF4444",
-  "#3B82F6",
-  "#9333EA",
-  "#FBBF24",
-];
-
 const ChartDisplay = ({ data }) => {
   const total = data.reduce((sum, item) => sum + item.amount, 0);
+
+  const categoryColorMap = categories.reduce((map, category) => {
+    map[category.value] = category.color;
+    return map;
+  }, {});
 
   return (
     <div className="flex flex-col items-center">
@@ -30,7 +26,10 @@ const ChartDisplay = ({ data }) => {
           label={({ name, value }) => `${Utility.formatCurrency(value)}`}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell
+              key={`cell-${index}`}
+              fill={categoryColorMap[entry.category] || "#cccccc"}
+            />
           ))}
         </Pie>
         <Tooltip formatter={(value) => Utility.formatCurrency(value)} />
