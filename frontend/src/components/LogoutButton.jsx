@@ -17,7 +17,7 @@ function LogoutButton() {
       <img
         src={"/icons/logout.svg"}
         alt="Logout"
-        className="w-6 h-6 sm:w-8 sm:h-8" // Adjust size for small and larger screens
+        className="w-6 h-6 sm:w-8 sm:h-8"
       />
       <span className="hidden sm:inline">Logout</span>
     </button>
