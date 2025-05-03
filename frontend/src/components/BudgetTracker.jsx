@@ -8,8 +8,13 @@ const BudgetTracker = () => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:1234/api/goals")
+      .get("http://localhost:1234/api/goals", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setGoals(res.data))
       .catch((err) => console.error(err));
   }, []);

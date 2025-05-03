@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserSchema } from "../models/User.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 const User = mongoose.model("User", UserSchema);
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION || "1d";
 
 export const register = async (req, res) => {

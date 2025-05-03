@@ -10,15 +10,25 @@ export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:1234/api/expenses")
+      .get("http://localhost:1234/api/expenses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setExpenses(res.data))
       .catch((err) => console.error(err));
   }, []);
 
   const handleAddExpense = (newExpense) => {
+    const token = localStorage.getItem("token");
     axios
-      .post("http://localhost:1234/api/expenses", newExpense)
+      .post("http://localhost:1234/api/expenses", newExpense, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setExpenses((prev) => [...prev, res.data]))
       .catch((err) => console.error(err));
   };
