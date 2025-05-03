@@ -37,10 +37,13 @@ export default function Dashboard() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold text-gray-800">
-          BudgetFlow Dashboard
-        </h1>
-        <LogoutButton />
+        <div className="flex items-center space-x-4">
+          <img src="/icons/logo.svg" alt="Logo" className="w-14 h-14" />
+          <h1 className="text-3xl font-bold text-gray-800">BudgetFlow</h1>
+        </div>
+        <div className="flex items-center space-x-2">
+          <LogoutButton className="text-sm sm:text-base p-2 sm:p-3" />
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="col-span-1 lg:col-span-2">
