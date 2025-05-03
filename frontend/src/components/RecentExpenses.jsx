@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Utility from "@/utils/Utility";
+import { format } from "date-fns";
 
 function RecentExpenses({ expenses }) {
   return (
@@ -28,7 +29,9 @@ function RecentExpenses({ expenses }) {
           <TableBody>
             {expenses.map((expense, index) => (
               <TableRow key={index}>
-                <TableCell className="text-left">{expense.date}</TableCell>
+                <TableCell className="text-left">
+                  {format(new Date(expense.date), "do LLL, yyyy")}{" "}
+                </TableCell>
                 <TableCell className="text-left">
                   {expense.category ? expense.category : "Uncategorized"}
                 </TableCell>
