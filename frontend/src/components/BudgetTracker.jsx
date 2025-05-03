@@ -6,7 +6,6 @@ import Utility from "@/utils/Utility";
 
 const BudgetTracker = () => {
   const [goals, setGoals] = useState([]);
-  console.log("goals:", goals);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
