@@ -5,6 +5,7 @@ import ExpenseForm from "./ExpenseForm";
 import BudgetTracker from "./BudgetTracker";
 import RecentExpenses from "./RecentExpenses";
 import axios from "axios";
+import LogoutButton from "./LogoutButton";
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -35,9 +36,12 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">
-        BudgetFlow Dashboard
-      </h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold text-gray-800">
+          BudgetFlow Dashboard
+        </h1>
+        <LogoutButton />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="col-span-1 lg:col-span-2">
           <CardHeader className="text-center">
