@@ -3,8 +3,8 @@ import {
   Table,
   TableRow,
   TableCell,
-  TableHead,
   TableBody,
+  TableHeader,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Utility from "@/utils/Utility";
@@ -18,14 +18,14 @@ function RecentExpenses({ expenses }) {
       </CardHeader>
       <CardContent>
         <Table>
-          <TableHead>
+          <TableHeader>
             <TableRow>
               <TableCell className="text-left">Date</TableCell>
               <TableCell className="text-left">Category</TableCell>
               <TableCell className="text-left">Description</TableCell>
               <TableCell className="text-right">Amount</TableCell>
             </TableRow>
-          </TableHead>
+          </TableHeader>
           <TableBody>
             {expenses.map((expense, index) => (
               <TableRow key={index}>
