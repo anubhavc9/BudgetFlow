@@ -14,10 +14,61 @@ export const createGoal = async (req, res) => {
   }
 };
 
+// export const getGoals = async (req, res) => {
+//   try {
+//     const goals = await Goal.find({ user: req.user._id });
+//     res.json(goals);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const getGoals = async (req, res) => {
   try {
-    const goals = await Goal.find({ user: req.user._id });
-    res.json(goals);
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+
+    const goalsWithSpent = await Goal.aggregate([
+      { $match: { user: userId } },
+      {
+        $lookup: {
+          from: "expenses",
+          let: { goalCategory: "$category", goalUser: "$user" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$category", "$$goalCategory"] },
+                    { $eq: ["$user", "$$goalUser"] },
+                  ],
+                },
+              },
+            },
+            {
+              $group: {
+                _id: null,
+                totalSpent: { $sum: "$amount" },
+              },
+            },
+          ],
+          as: "spentData",
+        },
+      },
+      {
+        $addFields: {
+          spent: {
+            $ifNull: [{ $arrayElemAt: ["$spentData.totalSpent", 0] }, 0],
+          },
+        },
+      },
+      {
+        $project: {
+          spentData: 0,
+        },
+      },
+    ]);
+
+    res.json(goalsWithSpent);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -13,10 +13,6 @@ export const GoalSchema = new Schema(
       type: Number,
       required: true,
     },
-    spent: {
-      type: Number,
-      default: 0,
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

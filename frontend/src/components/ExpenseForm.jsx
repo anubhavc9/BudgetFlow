@@ -53,7 +53,7 @@ const ExpenseForm = ({ onAdd, categories }) => {
         required
       >
         <SelectTrigger className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md">
-          <SelectValue placeholder="Select a category" />
+          <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent className="bg-white shadow-md rounded">
           {categories?.map((category) => (
