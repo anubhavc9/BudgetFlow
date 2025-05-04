@@ -4,7 +4,7 @@ import axios from "axios";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Utility from "@/utils/Utility";
 
-const BudgetTracker = () => {
+const BudgetTracker = ({ categories }) => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,13 @@ const BudgetTracker = () => {
       .catch((err) => console.error(err));
   }, []);
 
+  const getCategoryLabel = (categoryId) => {
+    return (
+      categories?.find((cat) => cat._id === categoryId)?.label ||
+      "Uncategorized"
+    );
+  };
+
   return (
     <>
       {goals.length > 0 ? (
@@ -32,7 +39,7 @@ const BudgetTracker = () => {
               {goals.map((goal, index) => (
                 <div key={index}>
                   <div className="flex justify-between text-sm font-medium text-gray-700">
-                    <span>{goal.category}</span>
+                    <span>{getCategoryLabel(goal.category)}</span>
                     <span>
                       {Utility.formatCurrency(goal.spent)} /{" "}
                       {Utility.formatCurrency(goal.limit)}

@@ -9,6 +9,7 @@ import LogoutButton from "./LogoutButton";
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,6 +21,19 @@ export default function Dashboard() {
       })
       .then((res) => setExpenses(res.data))
       .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    // TODO: error handling
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:1234/api/categories", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch(console.error);
   }, []);
 
   const handleAddExpense = (newExpense) => {
@@ -51,20 +65,20 @@ export default function Dashboard() {
             <CardTitle>Spending Breakdown</CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartDisplay data={expenses} />
+            <ChartDisplay data={expenses} categories={categories} />
           </CardContent>
         </Card>
-        <BudgetTracker />
+        <BudgetTracker categories={categories} />
       </div>
       <Card>
         <CardHeader>
           <CardTitle>Add New Expense</CardTitle>
         </CardHeader>
         <CardContent>
-          <ExpenseForm onAdd={handleAddExpense} />
+          <ExpenseForm onAdd={handleAddExpense} categories={categories} />
         </CardContent>
       </Card>
-      <RecentExpenses expenses={expenses} />
+      <RecentExpenses expenses={expenses} categories={categories} />
     </div>
   );
 }

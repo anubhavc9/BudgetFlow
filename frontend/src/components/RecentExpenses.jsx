@@ -10,7 +10,14 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Utility from "@/utils/Utility";
 import { format } from "date-fns";
 
-function RecentExpenses({ expenses }) {
+function RecentExpenses({ expenses, categories }) {
+  const getCategoryLabel = (categoryId) => {
+    return (
+      categories?.find((cat) => cat._id === categoryId)?.label ||
+      "Uncategorized"
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -30,10 +37,10 @@ function RecentExpenses({ expenses }) {
             {expenses.map((expense, index) => (
               <TableRow key={index}>
                 <TableCell className="text-left">
-                  {format(new Date(expense.date), "do LLL, yyyy")}{" "}
+                  {format(new Date(expense.date), "do LLL, yyyy")}
                 </TableCell>
                 <TableCell className="text-left">
-                  {expense.category ? expense.category : "Uncategorized"}
+                  {getCategoryLabel(expense.category)}
                 </TableCell>
                 <TableCell className="text-left">
                   {expense.description || "-"}

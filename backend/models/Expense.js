@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 export const ExpenseSchema = new Schema({
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
   },
   amount: {

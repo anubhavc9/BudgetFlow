@@ -14,18 +14,23 @@ import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { categories } from "@/lib/categories";
 
-const ExpenseForm = ({ onAdd }) => {
-  const [category, setCategory] = useState("");
+const ExpenseForm = ({ onAdd, categories }) => {
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd({ category, amount: parseFloat(amount), description, date });
-    setCategory("");
+    onAdd({
+      category: selectedCategoryId,
+      amount: parseFloat(amount),
+      description,
+      date,
+    });
+
+    setSelectedCategoryId("");
     setAmount("");
     setDescription("");
     setDate("");
@@ -41,14 +46,19 @@ const ExpenseForm = ({ onAdd }) => {
         required
         className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md"
       />
-      <Select onValueChange={(value) => setCategory(value)} required>
+
+      <Select
+        onValueChange={(value) => setSelectedCategoryId(value)}
+        value={selectedCategoryId}
+        required
+      >
         <SelectTrigger className="focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-md">
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent className="bg-white shadow-md rounded">
-          {categories.map((category) => (
-            <SelectItem key={category.value} value={category.value}>
-              {category.label}
+          {categories?.map((category) => (
+            <SelectItem key={category._id} value={category._id}>
+              {category?.label}
             </SelectItem>
           ))}
         </SelectContent>
