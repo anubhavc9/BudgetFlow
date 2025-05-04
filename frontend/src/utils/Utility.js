@@ -14,4 +14,16 @@ export default class Utility {
       "Uncategorized"
     );
   };
+
+  static getCategoryColor = (categories, categoryId) => {
+    return (
+      categories?.find((category) => category._id === categoryId)?.color ||
+      "#cccccc"
+    );
+  };
+
+  static getCategoryIconSrc = (categories, categoryId) => {
+    const categoryLabel = this.getCategoryLabel(categories, categoryId);
+    return `/icons/${categoryLabel.toLowerCase()}.svg`;
+  };
 }

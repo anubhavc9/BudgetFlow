@@ -5,12 +5,6 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 const ChartDisplay = ({ data, categories }) => {
   const total = data.reduce((sum, item) => sum + item.amount, 0);
 
-  const getCategoryColor = (categoryId) => {
-    return (
-      categories?.find((cat) => cat._id === categoryId)?.color || "#cccccc"
-    );
-  };
-
   // Add categoryLabel to each item for use in Pie's nameKey
   const transformedData = data.map((item) => ({
     ...item,
@@ -34,7 +28,7 @@ const ChartDisplay = ({ data, categories }) => {
           {data.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={getCategoryColor(entry.category)}
+              fill={Utility.getCategoryColor(categories, entry.category)}
             />
           ))}
         </Pie>

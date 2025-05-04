@@ -19,11 +19,6 @@ const BudgetTracker = ({ categories }) => {
       .catch((err) => console.error(err));
   }, []);
 
-  const getCategoryIconSrc = (categoryId) => {
-    const categoryLabel = Utility.getCategoryLabel(categories, categoryId);
-    return `/icons/${categoryLabel.toLowerCase()}.svg`;
-  };
-
   return (
     <>
       {goals.length > 0 ? (
@@ -39,7 +34,10 @@ const BudgetTracker = ({ categories }) => {
                   <div className="flex justify-between items-center text-sm font-medium text-gray-700">
                     <div className="flex gap-1 items-center">
                       <img
-                        src={getCategoryIconSrc(goal.category)}
+                        src={Utility.getCategoryIconSrc(
+                          categories,
+                          goal.category
+                        )}
                         alt=""
                         className="w-6 h-6"
                       />

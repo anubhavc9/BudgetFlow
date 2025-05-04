@@ -11,17 +11,6 @@ import Utility from "@/utils/Utility";
 import { format } from "date-fns";
 
 function RecentExpenses({ expenses, categories }) {
-  const getCategoryIconSrc = (categoryId) => {
-    const categoryLabel = Utility.getCategoryLabel(categories, categoryId);
-    return `/icons/${categoryLabel.toLowerCase()}.svg`;
-  };
-
-  const getCategoryColor = (categoryId) => {
-    return (
-      categories?.find((cat) => cat._id === categoryId)?.color || "#cccccc"
-    );
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -48,12 +37,21 @@ function RecentExpenses({ expenses, categories }) {
                   <span
                     className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
                     style={{
-                      borderColor: getCategoryColor(expense.category),
-                      color: getCategoryColor(expense.category),
+                      borderColor: Utility.getCategoryColor(
+                        categories,
+                        expense.category
+                      ),
+                      color: Utility.getCategoryColor(
+                        categories,
+                        expense.category
+                      ),
                     }}
                   >
                     <img
-                      src={getCategoryIconSrc(expense.category)}
+                      src={Utility.getCategoryIconSrc(
+                        categories,
+                        expense.category
+                      )}
                       alt=""
                       className="w-5 h-5"
                     />
@@ -65,12 +63,18 @@ function RecentExpenses({ expenses, categories }) {
                     <div
                       className="p-1 rounded-full border"
                       style={{
-                        borderColor: getCategoryColor(expense.category),
+                        borderColor: Utility.getCategoryColor(
+                          categories,
+                          expense.category
+                        ),
                         cursor: "pointer",
                       }}
                     >
                       <img
-                        src={getCategoryIconSrc(expense.category)}
+                        src={Utility.getCategoryIconSrc(
+                          categories,
+                          expense.category
+                        )}
                         alt=""
                         className="w-5 h-5"
                       />
