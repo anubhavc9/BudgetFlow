@@ -51,8 +51,9 @@ function RecentExpenses({ expenses, categories }) {
                   {format(new Date(expense.date), "do LLL, yyyy")}
                 </TableCell>
                 <TableCell className="text-left">
+                  {/* Large screen: Full chip with icon + label */}
                   <span
-                    className="flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
+                    className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
                     style={{
                       borderColor: getCategoryColor(expense.category),
                       color: getCategoryColor(expense.category),
@@ -65,6 +66,26 @@ function RecentExpenses({ expenses, categories }) {
                     />
                     {getCategoryLabel(expense.category)}
                   </span>
+
+                  {/* Small screen: Icon only with tooltip */}
+                  <div className="relative sm:hidden group w-fit">
+                    <div
+                      className="p-1 rounded-full border"
+                      style={{
+                        borderColor: getCategoryColor(expense.category),
+                        cursor: "pointer",
+                      }}
+                    >
+                      <img
+                        src={getCategoryIconSrc(expense.category)}
+                        alt=""
+                        className="w-5 h-5"
+                      />
+                    </div>
+                    <div className="absolute z-10 bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                      {getCategoryLabel(expense.category)}
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell className="text-left">
                   {expense.description || "-"}
