@@ -24,7 +24,6 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    // TODO: error handling
     const token = localStorage.getItem("token");
     fetch("http://localhost:1234/api/categories", {
       headers: {

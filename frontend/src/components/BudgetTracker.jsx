@@ -26,6 +26,11 @@ const BudgetTracker = ({ categories }) => {
     );
   };
 
+  const getCategoryIconSrc = (categoryId) => {
+    const categoryLabel = getCategoryLabel(categoryId);
+    return `/icons/${categoryLabel.toLowerCase()}.svg`;
+  };
+
   return (
     <>
       {goals.length > 0 ? (
@@ -38,8 +43,15 @@ const BudgetTracker = ({ categories }) => {
             <div className="space-y-4">
               {goals.map((goal, index) => (
                 <div key={index}>
-                  <div className="flex justify-between text-sm font-medium text-gray-700">
-                    <span>{getCategoryLabel(goal.category)}</span>
+                  <div className="flex justify-between items-center text-sm font-medium text-gray-700">
+                    <div className="flex gap-1 items-center">
+                      <img
+                        src={getCategoryIconSrc(goal.category)}
+                        alt=""
+                        className="w-6 h-6"
+                      />
+                      <span>{getCategoryLabel(goal.category)}</span>
+                    </div>
                     <span>
                       {Utility.formatCurrency(goal.spent)} /{" "}
                       {Utility.formatCurrency(goal.limit)}
