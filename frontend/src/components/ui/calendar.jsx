@@ -10,6 +10,12 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
+      modifiers={{
+        today: new Date(),
+      }}
+      modifiersClassNames={{
+        today: "border border-primary font-bold border-indigo-500",
+      }}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
