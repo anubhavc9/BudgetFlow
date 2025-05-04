@@ -9,11 +9,12 @@ export const getExpenses = async (req, res) => {
 };
 
 export const addExpense = async (req, res) => {
-  const { category, amount, description } = req.body;
+  const { category, amount, description, date } = req.body;
   const newExpense = new Expense({
     category,
     amount,
     description,
+    date,
     user: req.user._id,
   });
   await newExpense.save();
