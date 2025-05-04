@@ -26,17 +26,15 @@ const ChartDisplay = ({ data, categories }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <PieChart width={400} height={400}>
+      <PieChart width={500} height={500}>
         <Pie
           data={transformedData}
-          cx={200}
-          cy={200}
-          labelLine={false}
-          outerRadius={150}
+          cx="50%"
+          cy="50%"
+          labelLine={true}
+          outerRadius={120}
           fill="#8884d8"
           dataKey="amount"
-          // nameKey="category"
-          // label={({ name, value }) => `${Utility.formatCurrency(value)}`}
           nameKey="categoryLabel"
           label={({ name, value }) => `${Utility.formatCurrency(value)}`}
         >
@@ -48,7 +46,7 @@ const ChartDisplay = ({ data, categories }) => {
           ))}
         </Pie>
         <Tooltip formatter={(value) => Utility.formatCurrency(value)} />
-        <Legend />
+        <Legend layout="horizontal" verticalAlign="bottom" align="center" />
       </PieChart>
       <p className="text-lg font-bold text-gray-800 mt-4">
         Total: {Utility.formatCurrency(total)}
