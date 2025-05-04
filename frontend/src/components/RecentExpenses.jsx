@@ -18,6 +18,17 @@ function RecentExpenses({ expenses, categories }) {
     );
   };
 
+  const getCategoryIconSrc = (categoryId) => {
+    const categoryLabel = getCategoryLabel(categoryId);
+    return `/icons/${categoryLabel.toLowerCase()}.svg`;
+  };
+
+  const getCategoryColor = (categoryId) => {
+    return (
+      categories?.find((cat) => cat._id === categoryId)?.color || "#cccccc"
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -40,7 +51,20 @@ function RecentExpenses({ expenses, categories }) {
                   {format(new Date(expense.date), "do LLL, yyyy")}
                 </TableCell>
                 <TableCell className="text-left">
-                  {getCategoryLabel(expense.category)}
+                  <span
+                    className="flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
+                    style={{
+                      borderColor: getCategoryColor(expense.category),
+                      color: getCategoryColor(expense.category),
+                    }}
+                  >
+                    <img
+                      src={getCategoryIconSrc(expense.category)}
+                      alt=""
+                      className="w-5 h-5"
+                    />
+                    {getCategoryLabel(expense.category)}
+                  </span>
                 </TableCell>
                 <TableCell className="text-left">
                   {expense.description || "-"}
