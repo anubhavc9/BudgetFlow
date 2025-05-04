@@ -19,15 +19,8 @@ const BudgetTracker = ({ categories }) => {
       .catch((err) => console.error(err));
   }, []);
 
-  const getCategoryLabel = (categoryId) => {
-    return (
-      categories?.find((cat) => cat._id === categoryId)?.label ||
-      "Uncategorized"
-    );
-  };
-
   const getCategoryIconSrc = (categoryId) => {
-    const categoryLabel = getCategoryLabel(categoryId);
+    const categoryLabel = Utility.getCategoryLabel(categories, categoryId);
     return `/icons/${categoryLabel.toLowerCase()}.svg`;
   };
 
@@ -50,7 +43,9 @@ const BudgetTracker = ({ categories }) => {
                         alt=""
                         className="w-6 h-6"
                       />
-                      <span>{getCategoryLabel(goal.category)}</span>
+                      <span>
+                        {Utility.getCategoryLabel(categories, goal.category)}
+                      </span>
                     </div>
                     <span>
                       {Utility.formatCurrency(goal.spent)} /{" "}

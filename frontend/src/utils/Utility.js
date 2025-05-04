@@ -7,4 +7,11 @@ export default class Utility {
       maximumFractionDigits: 1,
     }).format(value);
   }
+
+  static getCategoryLabel = (categories, categoryId) => {
+    return (
+      categories?.find((category) => category._id === categoryId)?.label ||
+      "Uncategorized"
+    );
+  };
 }

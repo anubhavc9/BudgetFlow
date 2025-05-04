@@ -11,15 +11,8 @@ import Utility from "@/utils/Utility";
 import { format } from "date-fns";
 
 function RecentExpenses({ expenses, categories }) {
-  const getCategoryLabel = (categoryId) => {
-    return (
-      categories?.find((cat) => cat._id === categoryId)?.label ||
-      "Uncategorized"
-    );
-  };
-
   const getCategoryIconSrc = (categoryId) => {
-    const categoryLabel = getCategoryLabel(categoryId);
+    const categoryLabel = Utility.getCategoryLabel(categories, categoryId);
     return `/icons/${categoryLabel.toLowerCase()}.svg`;
   };
 
@@ -64,7 +57,7 @@ function RecentExpenses({ expenses, categories }) {
                       alt=""
                       className="w-5 h-5"
                     />
-                    {getCategoryLabel(expense.category)}
+                    {Utility.getCategoryLabel(categories, expense.category)}
                   </span>
 
                   {/* Small screen: Icon only with tooltip */}
@@ -83,7 +76,7 @@ function RecentExpenses({ expenses, categories }) {
                       />
                     </div>
                     <div className="absolute z-10 bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                      {getCategoryLabel(expense.category)}
+                      {Utility.getCategoryLabel(categories, expense.category)}
                     </div>
                   </div>
                 </TableCell>
