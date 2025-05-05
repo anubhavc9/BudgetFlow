@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import { CategorySchema } from "../models/Category.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const categories = [
   { value: "Food", label: "Food", color: "#10b981" },
@@ -15,7 +18,7 @@ const categories = [
 const Category = mongoose.model("Category", CategorySchema);
 
 mongoose
-  .connect("mongodb://localhost:27017/budgetflow", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

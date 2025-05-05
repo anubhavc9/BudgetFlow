@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb://localhost:27017/budgetflow", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -26,5 +26,5 @@ app.use("/api/goals", auth, goalRoutes);
 app.use("/api/categories", auth, categoryRoutes);
 app.use("/api/auth", authRoutes);
 
-const PORT = process.env.PORT || 1234;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
