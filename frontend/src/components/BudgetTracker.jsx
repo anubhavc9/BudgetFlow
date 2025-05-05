@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { API_BASE_URL } from "../../config/api.js";
 
 const BudgetTracker = ({ categories }) => {
   const [goals, setGoals] = useState([]);
@@ -21,7 +22,7 @@ const BudgetTracker = ({ categories }) => {
   const fetchGoals = () => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:1234/api/goals", {
+      .get(`${API_BASE_URL}/api/goals`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,7 +42,7 @@ const BudgetTracker = ({ categories }) => {
 
     try {
       await axios.post(
-        "http://localhost:1234/api/goals",
+        `${API_BASE_URL}/api/goals`,
         {
           category: selectedCategory,
           limit: parseFloat(limit),

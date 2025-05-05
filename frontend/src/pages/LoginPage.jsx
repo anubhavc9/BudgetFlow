@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config/api.js";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,15 +12,12 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:1234/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        email,
+        password,
+      });
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard"); // Redirect to dashboard after login
+      navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }

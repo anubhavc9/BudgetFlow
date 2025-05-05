@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config/api.js";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -12,12 +13,12 @@ function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:1234/api/auth/register", {
+      await axios.post(`${API_BASE_URL}/api/auth/register`, {
         email,
         password,
       });
       setSuccess("Registration successful! Redirecting to login...");
-      setTimeout(() => navigate("/"), 2000); // Redirect to login after 2 seconds
+      setTimeout(() => navigate("/"), 2000);
     } catch (err) {
       setError("Registration failed. Please try again.");
     }

@@ -6,6 +6,7 @@ import BudgetTracker from "./BudgetTracker";
 import RecentExpenses from "./RecentExpenses";
 import axios from "axios";
 import LogoutButton from "./LogoutButton";
+import { API_BASE_URL } from "../../config/api.js";
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -14,7 +15,7 @@ export default function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:1234/api/expenses", {
+      .get(`${API_BASE_URL}/api/expenses`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,7 +26,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:1234/api/categories", {
+    fetch(`${API_BASE_URL}/api/categories`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +47,7 @@ export default function Dashboard() {
   const handleAddExpense = (newExpense) => {
     const token = localStorage.getItem("token");
     axios
-      .post("http://localhost:1234/api/expenses", newExpense, {
+      .post(`${API_BASE_URL}/api/expenses`, newExpense, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
