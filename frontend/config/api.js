@@ -1,1 +1,1 @@
-export const API_BASE_URL = "http://localhost:1234";
+export const API_BASE_URL = "https://budgetflow-95qz.onrender.com";
