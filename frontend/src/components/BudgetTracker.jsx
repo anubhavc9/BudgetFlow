@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { API_BASE_URL } from "../../config/api.js";
+import { Wallet } from "lucide-react";
 
 const BudgetTracker = ({ categories }) => {
   const [goals, setGoals] = useState([]);
@@ -81,44 +82,52 @@ const BudgetTracker = ({ categories }) => {
             </div>
           ))}
         </CardContent>
+      ) : goals.length === 0 ? (
+        <CardContent className="flex flex-col items-center justify-center h-60 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-6 m-6">
+          <Wallet className="w-12 h-12 text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-700">
+            No budget goals added yet
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            Start by setting your budget goals to track your spending.
+          </p>
+        </CardContent>
       ) : (
-        goals.length > 0 && (
-          <>
-            <CardHeader>
-              <CardTitle>Budget Goals</CardTitle>
-            </CardHeader>
+        <>
+          <CardHeader>
+            <CardTitle>Budget Goals</CardTitle>
+          </CardHeader>
 
-            <CardContent className="space-y-4">
-              {goals.map((goal, index) => (
-                <div key={index}>
-                  <div className="flex justify-between items-center text-sm font-medium text-gray-700">
-                    <div className="flex gap-1 items-center">
-                      <img
-                        src={Utility.getCategoryIconSrc(
-                          categories,
-                          goal.category
-                        )}
-                        alt=""
-                        className="w-6 h-6"
-                      />
-                      <span>
-                        {Utility.getCategoryLabel(categories, goal.category)}
-                      </span>
-                    </div>
+          <CardContent className="space-y-4">
+            {goals.map((goal, index) => (
+              <div key={index}>
+                <div className="flex justify-between items-center text-sm font-medium text-gray-700">
+                  <div className="flex gap-1 items-center">
+                    <img
+                      src={Utility.getCategoryIconSrc(
+                        categories,
+                        goal.category
+                      )}
+                      alt=""
+                      className="w-6 h-6"
+                    />
                     <span>
-                      {Utility.formatCurrency(goal.spent)} /{" "}
-                      {Utility.formatCurrency(goal.limit)}
+                      {Utility.getCategoryLabel(categories, goal.category)}
                     </span>
                   </div>
-                  <Progress
-                    value={(goal.spent / goal.limit) * 100}
-                    className="mt-2 [&>*]:bg-indigo-600 bg-gray-300 rounded-full"
-                  />
+                  <span>
+                    {Utility.formatCurrency(goal.spent)} /{" "}
+                    {Utility.formatCurrency(goal.limit)}
+                  </span>
                 </div>
-              ))}
-            </CardContent>
-          </>
-        )
+                <Progress
+                  value={(goal.spent / goal.limit) * 100}
+                  className="mt-2 [&>*]:bg-indigo-600 bg-gray-300 rounded-full"
+                />
+              </div>
+            ))}
+          </CardContent>
+        </>
       )}
 
       <CardHeader>
