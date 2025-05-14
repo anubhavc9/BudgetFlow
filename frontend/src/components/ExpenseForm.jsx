@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 
-const ExpenseForm = ({ onAdd, categories }) => {
+const ExpenseForm = ({ onAdd, categories, addingExpense }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
@@ -96,8 +96,9 @@ const ExpenseForm = ({ onAdd, categories }) => {
       <Button
         type="submit"
         className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
+        disabled={addingExpense}
       >
-        Add Expense
+        {addingExpense ? "Adding..." : "Add Expense"}
       </Button>
     </form>
   );

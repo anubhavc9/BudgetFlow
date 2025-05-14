@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [categories, setCategories] = useState([]);
   const [loadingExpenses, setLoadingExpenses] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
+  const [addingExpense, setAddingExpense] = useState(false);
 
   useEffect(() => {
     setLoadingExpenses(true);
@@ -60,6 +61,7 @@ export default function Dashboard() {
   }, []);
 
   const handleAddExpense = (newExpense) => {
+    setAddingExpense(true);
     const token = localStorage.getItem("token");
     axios
       .post(`${API_BASE_URL}/api/expenses`, newExpense, {
@@ -67,8 +69,13 @@ export default function Dashboard() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setExpenses((prev) => [...prev, res.data]))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setExpenses((prev) => [...prev, res.data]);
+        setAddingExpense(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -108,7 +115,11 @@ export default function Dashboard() {
           <CardTitle>Add New Expense</CardTitle>
         </CardHeader>
         <CardContent>
-          <ExpenseForm onAdd={handleAddExpense} categories={categories} />
+          <ExpenseForm
+            onAdd={handleAddExpense}
+            categories={categories}
+            addingExpense={addingExpense}
+          />
         </CardContent>
       </Card>
       <RecentExpenses
