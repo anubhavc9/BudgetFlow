@@ -8,6 +8,7 @@ import RecentExpenses from "./RecentExpenses";
 import axios from "axios";
 import LogoutButton from "./LogoutButton";
 import { API_BASE_URL } from "../../config/api.js";
+import { motion } from "framer-motion";
 
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -83,7 +84,22 @@ export default function Dashboard() {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-4">
           <img src="/icons/logo.svg" alt="Logo" className="w-14 h-14" />
-          <h1 className="text-3xl font-bold text-gray-800">BudgetFlow</h1>
+          <h1 className="text-3xl font-bold text-gray-800 flex">
+            Budget
+            <motion.span
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 120,
+                damping: 12,
+                delay: 0.2,
+              }}
+              className="text-indigo-600 ml-0.5"
+            >
+              Flow
+            </motion.span>
+          </h1>{" "}
         </div>
         <div className="flex items-center space-x-2">
           <LogoutButton className="text-sm sm:text-base p-2 sm:p-3" />
