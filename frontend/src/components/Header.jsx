@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 
-const Header = () => {
+const Header = ({ iconSize = 14, headingSize = "3xl" }) => {
   return (
     <div className="flex items-center space-x-4">
-      <img src="/icons/logo.svg" alt="Logo" className="w-14 h-14" />
-      <h1 className="text-3xl font-bold text-gray-800 flex">
+      <img
+        src="/icons/logo.svg"
+        alt="Logo"
+        className={`w-${iconSize} h-${iconSize}`}
+      />
+      <h1 className={`text-${headingSize} font-bold text-gray-800 flex`}>
         Budget
         <motion.span
           initial={{ x: 50, opacity: 0 }}

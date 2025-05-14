@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config/api.js";
 import { Loader2 } from "lucide-react";
+import Header from "@/components/Header.jsx";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -38,7 +39,10 @@ function RegisterPage() {
         onSubmit={handleRegister}
         className="bg-white p-6 rounded shadow-md w-80 space-y-4"
       >
-        <h2 className="text-2xl font-bold text-center">Register</h2>
+        <div className="flex justify-center items-center mb-4">
+          <Header iconSize={10} headingSize="2xl" />
+        </div>
+
         {error && <p className="text-red-500 text-sm">{error}</p>}
         {success && <p className="text-green-500 text-sm">{success}</p>}
         <div>
