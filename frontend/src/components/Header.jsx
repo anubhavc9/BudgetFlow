@@ -1,4 +1,22 @@
 import { motion } from "framer-motion";
+import clsx from "clsx";
+
+const sizeMap = {
+  10: "w-10 h-10",
+  12: "w-12 h-12",
+  14: "w-14 h-14",
+  16: "w-16 h-16",
+};
+
+const headingSizeMap = {
+  sm: "text-sm",
+  base: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
+  "2xl": "text-2xl",
+  "3xl": "text-3xl",
+  "4xl": "text-4xl",
+};
 
 const Header = ({ iconSize = 14, headingSize = "3xl" }) => {
   return (
@@ -6,9 +24,14 @@ const Header = ({ iconSize = 14, headingSize = "3xl" }) => {
       <img
         src="/icons/logo.svg"
         alt="Logo"
-        className={`w-${iconSize} h-${iconSize}`}
+        className={clsx(sizeMap[iconSize] || sizeMap[14])}
       />
-      <h1 className={`text-${headingSize} font-bold text-gray-800 flex`}>
+      <h1
+        className={clsx(
+          headingSizeMap[headingSize] || headingSizeMap["3xl"],
+          "font-bold text-gray-800 flex"
+        )}
+      >
         Budget
         <motion.span
           initial={{ x: 50, opacity: 0 }}
