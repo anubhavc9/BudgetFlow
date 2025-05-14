@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import ChartDisplay from "./ChartDisplay";
 import ExpenseForm from "./ExpenseForm";
 import BudgetTracker from "./BudgetTracker";
@@ -11,8 +12,11 @@ import { API_BASE_URL } from "../../config/api.js";
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [loadingExpenses, setLoadingExpenses] = useState(false);
+  const [loadingCategories, setLoadingCategories] = useState(false);
 
   useEffect(() => {
+    setLoadingExpenses(true);
     const token = localStorage.getItem("token");
     axios
       .get(`${API_BASE_URL}/api/expenses`, {
@@ -20,11 +24,18 @@ export default function Dashboard() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setExpenses(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setExpenses(res.data);
+        setLoadingExpenses(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoadingExpenses(false);
+      });
   }, []);
 
   useEffect(() => {
+    setLoadingCategories(true);
     const token = localStorage.getItem("token");
     fetch(`${API_BASE_URL}/api/categories`, {
       headers: {
@@ -37,10 +48,14 @@ export default function Dashboard() {
         }
         return res.json();
       })
-      .then((data) => setCategories(data))
+      .then((data) => {
+        setCategories(data);
+        setLoadingCategories(false);
+      })
       .catch((err) => {
         console.error("Failed to fetch categories:", err);
         setCategories([]);
+        setLoadingCategories(false);
       });
   }, []);
 
@@ -67,15 +82,25 @@ export default function Dashboard() {
           <LogoutButton className="text-sm sm:text-base p-2 sm:p-3" />
         </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="col-span-1 lg:col-span-2">
-          <CardHeader className="text-center">
-            <CardTitle>Spending Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartDisplay data={expenses} categories={categories} />
-          </CardContent>
-        </Card>
+        {loadingExpenses ? (
+          <Skeleton className="w-full h-[630px] rounded-xl bg-gray-200 col-span-1 lg:col-span-2" />
+        ) : (
+          <Card className="col-span-1 lg:col-span-2">
+            <CardHeader className="text-center">
+              <CardTitle>Spending Breakdown</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ChartDisplay
+                data={expenses}
+                categories={categories}
+                loading={loadingExpenses}
+              />
+            </CardContent>
+          </Card>
+        )}
+
         <BudgetTracker categories={categories} />
       </div>
       <Card>
@@ -86,7 +111,12 @@ export default function Dashboard() {
           <ExpenseForm onAdd={handleAddExpense} categories={categories} />
         </CardContent>
       </Card>
-      <RecentExpenses expenses={expenses} categories={categories} />
+      <RecentExpenses
+        expenses={expenses}
+        categories={categories}
+        loadingExpenses={loadingExpenses}
+        loadingCategories={loadingCategories}
+      />
     </div>
   );
 }

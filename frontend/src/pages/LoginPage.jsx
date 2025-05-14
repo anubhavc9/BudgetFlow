@@ -53,13 +53,13 @@ function LoginPage() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
         >
           Login
         </button>
         <p className="text-sm text-center">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:underline">
+          <a href="/register" className="text-indigo-500 hover:underline">
             Register
           </a>
         </p>

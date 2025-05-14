@@ -7,10 +7,18 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import Utility from "@/utils/Utility";
 import { format } from "date-fns";
 
-function RecentExpenses({ expenses, categories }) {
+function RecentExpenses({
+  expenses,
+  categories,
+  loadingExpenses,
+  loadingCategories,
+}) {
+  const isLoading = loadingExpenses || loadingCategories;
+
   return (
     <Card>
       <CardHeader>
@@ -27,71 +35,91 @@ function RecentExpenses({ expenses, categories }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {expenses.map((expense, index) => (
-              <TableRow key={index}>
-                <TableCell className="text-left">
-                  {format(new Date(expense.date), "do LLL, yyyy")}
-                </TableCell>
-                <TableCell className="text-left">
-                  {/* Large screen: Full chip with icon + label */}
-                  <span
-                    className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
-                    style={{
-                      borderColor: Utility.getCategoryColor(
-                        categories,
-                        expense.category
-                      ),
-                      color: Utility.getCategoryColor(
-                        categories,
-                        expense.category
-                      ),
-                    }}
-                  >
-                    <img
-                      src={Utility.getCategoryIconSrc(
-                        categories,
-                        expense.category
-                      )}
-                      alt=""
-                      className="w-5 h-5"
-                    />
-                    {Utility.getCategoryLabel(categories, expense.category)}
-                  </span>
+            {isLoading
+              ? [...Array(5)].map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="text-left">
+                      <Skeleton className="w-24 h-4 bg-gray-200" />
+                    </TableCell>
+                    <TableCell className="text-left">
+                      <Skeleton className="w-32 h-6 rounded-full bg-gray-200" />
+                    </TableCell>
+                    <TableCell className="text-left">
+                      <Skeleton className="w-48 h-4 bg-gray-200" />
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Skeleton className="w-16 h-4 ml-auto bg-gray-200" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : expenses.map((expense, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="text-left">
+                      {format(new Date(expense.date), "do LLL, yyyy")}
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {/* Large screen: Full chip with icon + label */}
+                      <span
+                        className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-full border w-fit text-xs"
+                        style={{
+                          borderColor: Utility.getCategoryColor(
+                            categories,
+                            expense.category
+                          ),
+                          color: Utility.getCategoryColor(
+                            categories,
+                            expense.category
+                          ),
+                        }}
+                      >
+                        <img
+                          src={Utility.getCategoryIconSrc(
+                            categories,
+                            expense.category
+                          )}
+                          alt=""
+                          className="w-5 h-5"
+                        />
+                        {Utility.getCategoryLabel(categories, expense.category)}
+                      </span>
 
-                  {/* Small screen: Icon only with tooltip */}
-                  <div className="relative sm:hidden group w-fit">
-                    <div
-                      className="p-1 rounded-full border"
-                      style={{
-                        borderColor: Utility.getCategoryColor(
-                          categories,
-                          expense.category
-                        ),
-                        cursor: "pointer",
-                      }}
-                    >
-                      <img
-                        src={Utility.getCategoryIconSrc(
-                          categories,
-                          expense.category
-                        )}
-                        alt=""
-                        className="w-5 h-5"
-                      />
-                    </div>
-                    <div className="absolute z-10 bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                      {Utility.getCategoryLabel(categories, expense.category)}
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell className="text-left">
-                  {expense.description || "-"}
-                </TableCell>
-                <TableCell className="text-right">
-                  {Utility.formatCurrency(expense.amount)}
-                </TableCell>
-              </TableRow>
-            ))}
+                      {/* Small screen: Icon only with tooltip */}
+                      <div className="relative sm:hidden group w-fit">
+                        <div
+                          className="p-1 rounded-full border"
+                          style={{
+                            borderColor: Utility.getCategoryColor(
+                              categories,
+                              expense.category
+                            ),
+                            cursor: "pointer",
+                          }}
+                        >
+                          <img
+                            src={Utility.getCategoryIconSrc(
+                              categories,
+                              expense.category
+                            )}
+                            alt=""
+                            className="w-5 h-5"
+                          />
+                        </div>
+                        <div className="absolute z-10 bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                          {Utility.getCategoryLabel(
+                            categories,
+                            expense.category
+                          )}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {expense.description || "-"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {Utility.formatCurrency(expense.amount)}
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </CardContent>

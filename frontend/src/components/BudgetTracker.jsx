@@ -12,14 +12,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { API_BASE_URL } from "../../config/api.js";
 
 const BudgetTracker = ({ categories }) => {
   const [goals, setGoals] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [limit, setLimit] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchGoals = () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     axios
       .get(`${API_BASE_URL}/api/goals`, {
@@ -27,8 +30,14 @@ const BudgetTracker = ({ categories }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => setGoals(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setGoals(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -62,85 +71,92 @@ const BudgetTracker = ({ categories }) => {
   };
 
   return (
-    <>
-      <Card className="">
-        {goals.length > 0 && (
+    <Card>
+      {loading ? (
+        <CardContent className="p-6 space-y-4">
+          {[...Array(5)].map((_, idx) => (
+            <div key={idx} className="space-y-2">
+              <Skeleton className="w-full h-6 bg-gray-200" />
+              <Skeleton className="w-full h-4 rounded-full bg-gray-200" />
+            </div>
+          ))}
+        </CardContent>
+      ) : (
+        goals.length > 0 && (
           <>
             <CardHeader>
               <CardTitle>Budget Goals</CardTitle>
             </CardHeader>
 
-            <CardContent>
-              <div className="space-y-4">
-                {goals.map((goal, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between items-center text-sm font-medium text-gray-700">
-                      <div className="flex gap-1 items-center">
-                        <img
-                          src={Utility.getCategoryIconSrc(
-                            categories,
-                            goal.category
-                          )}
-                          alt=""
-                          className="w-6 h-6"
-                        />
-                        <span>
-                          {Utility.getCategoryLabel(categories, goal.category)}
-                        </span>
-                      </div>
+            <CardContent className="space-y-4">
+              {goals.map((goal, index) => (
+                <div key={index}>
+                  <div className="flex justify-between items-center text-sm font-medium text-gray-700">
+                    <div className="flex gap-1 items-center">
+                      <img
+                        src={Utility.getCategoryIconSrc(
+                          categories,
+                          goal.category
+                        )}
+                        alt=""
+                        className="w-6 h-6"
+                      />
                       <span>
-                        {Utility.formatCurrency(goal.spent)} /{" "}
-                        {Utility.formatCurrency(goal.limit)}
+                        {Utility.getCategoryLabel(categories, goal.category)}
                       </span>
                     </div>
-                    <Progress
-                      value={(goal.spent / goal.limit) * 100}
-                      className="mt-2 [&>*]:bg-indigo-600 bg-gray-300 rounded-full"
-                    />
+                    <span>
+                      {Utility.formatCurrency(goal.spent)} /{" "}
+                      {Utility.formatCurrency(goal.limit)}
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <Progress
+                    value={(goal.spent / goal.limit) * 100}
+                    className="mt-2 [&>*]:bg-indigo-600 bg-gray-300 rounded-full"
+                  />
+                </div>
+              ))}
             </CardContent>
           </>
-        )}
+        )
+      )}
 
-        <CardHeader>
-          <CardTitle>Add Budget Goal</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent className="bg-white shadow-md rounded cursor-pointer">
-              {categories.map((cat) => (
-                <SelectItem
-                  key={cat._id}
-                  value={cat._id}
-                  className="cursor-pointer"
-                >
-                  {cat.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <CardHeader>
+        <CardTitle>Add Budget Goal</CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select Category" />
+          </SelectTrigger>
+          <SelectContent className="bg-white shadow-md rounded cursor-pointer">
+            {categories.map((cat) => (
+              <SelectItem
+                key={cat._id}
+                value={cat._id}
+                className="cursor-pointer"
+              >
+                {cat.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-          <Input
-            type="number"
-            placeholder="Enter Limit"
-            value={limit}
-            onChange={(e) => setLimit(e.target.value)}
-          />
+        <Input
+          type="number"
+          placeholder="Enter Limit"
+          value={limit}
+          onChange={(e) => setLimit(e.target.value)}
+        />
 
-          <Button
-            onClick={handleAddGoal}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
-          >
-            Add Goal
-          </Button>
-        </CardContent>
-      </Card>
-    </>
+        <Button
+          onClick={handleAddGoal}
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
+        >
+          Add Goal
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 
