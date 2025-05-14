@@ -21,6 +21,7 @@ const BudgetTracker = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [limit, setLimit] = useState("");
   const [loading, setLoading] = useState(false);
+  const [addingGoal, setAddingGoal] = useState(false);
 
   const fetchGoals = () => {
     setLoading(true);
@@ -49,6 +50,7 @@ const BudgetTracker = ({ categories }) => {
     if (!selectedCategory || !limit) return;
 
     const token = localStorage.getItem("token");
+    setAddingGoal(true);
 
     try {
       await axios.post(
@@ -68,6 +70,8 @@ const BudgetTracker = ({ categories }) => {
       fetchGoals();
     } catch (err) {
       console.error("Error adding goal:", err);
+    } finally {
+      setAddingGoal(false);
     }
   };
 
@@ -161,8 +165,9 @@ const BudgetTracker = ({ categories }) => {
         <Button
           onClick={handleAddGoal}
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
+          disabled={addingGoal}
         >
-          Add Goal
+          {addingGoal ? "Adding..." : "Add Goal"}
         </Button>
       </CardContent>
     </Card>
