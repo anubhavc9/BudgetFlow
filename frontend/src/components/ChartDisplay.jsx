@@ -4,8 +4,6 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { BarChart3 } from "lucide-react";
 
 const ChartDisplay = ({ data, categories }) => {
-  const total = data.reduce((sum, item) => sum + item.amount, 0);
-
   if (data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[400px] w-full text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-6">
@@ -20,16 +18,30 @@ const ChartDisplay = ({ data, categories }) => {
     );
   }
 
-  const transformedData = data.map((item) => ({
+  const grouped = data.reduce((acc, item) => {
+    const key = item.category;
+    if (!acc[key]) {
+      acc[key] = {
+        category: key,
+        amount: 0,
+      };
+    }
+    acc[key].amount += item.amount;
+    return acc;
+  }, {});
+
+  const groupedData = Object.values(grouped).map((item) => ({
     ...item,
     categoryLabel: Utility.getCategoryLabel(categories, item.category),
   }));
+
+  const total = groupedData.reduce((sum, item) => sum + item.amount, 0);
 
   return (
     <div className="flex flex-col items-center">
       <PieChart width={500} height={500}>
         <Pie
-          data={transformedData}
+          data={groupedData}
           cx="50%"
           cy="50%"
           labelLine={true}
@@ -39,7 +51,7 @@ const ChartDisplay = ({ data, categories }) => {
           nameKey="categoryLabel"
           label={({ name, value }) => `${Utility.formatCurrency(value)}`}
         >
-          {data.map((entry, index) => (
+          {groupedData.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
               fill={Utility.getCategoryColor(categories, entry.category)}
