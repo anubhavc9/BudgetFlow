@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config/api.js";
+import { Loader2 } from "lucide-react";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
         email,
@@ -20,6 +25,7 @@ function LoginPage() {
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -53,9 +59,17 @@ function LoginPage() {
         </div>
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+          disabled={loading}
+          className="w-full flex justify-center items-center gap-2 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 disabled:opacity-60"
         >
-          Login
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin h-5 w-5" />
+              Logging in...
+            </>
+          ) : (
+            "Login"
+          )}
         </button>
         <p className="text-sm text-center">
           Don't have an account?{" "}

@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config/api.js";
+import { Loader2 } from "lucide-react";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
     try {
       await axios.post(`${API_BASE_URL}/api/auth/register`, {
         email,
@@ -21,6 +27,8 @@ function RegisterPage() {
       setTimeout(() => navigate("/"), 2000);
     } catch (err) {
       setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,9 +63,17 @@ function RegisterPage() {
         </div>
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+          disabled={loading}
+          className="w-full flex justify-center items-center gap-2 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 disabled:opacity-60"
         >
-          Register
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin h-5 w-5" />
+              Registering...
+            </>
+          ) : (
+            "Register"
+          )}
         </button>
         <p className="text-sm text-center">
           Already have an account?{" "}
